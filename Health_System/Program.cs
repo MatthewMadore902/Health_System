@@ -18,19 +18,35 @@ namespace Health_System
 		static System.Random random = new System.Random();
 		static string[] weapon;
 		static int[] ammo;
+		static string currentWeapon;
 		
 
 
 		static void ShowHUD()
 		{
 			Console.WriteLine("#################################################");
+			Console.WriteLine("health: " + health, "Lives: " + lives, "Shield: " + shield);
 			Console.WriteLine("");
+			Console.WriteLine("Ammo:" + ammo, "Current weapon: " + currentWeapon);
+			Console.WriteLine("#################################################");
 		}
 
 		static void Health()
 		{
 			health = 100;
 
+			if (health <= 0)
+			{
+				lives = lives - 1;
+			}
+			if (lives == 0)
+			{
+				Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++");
+				Console.WriteLine("+                                             +");
+				Console.WriteLine("+             Game Over You Suck              +");
+				Console.WriteLine("+                                             +");
+				Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++");
+			}
 		}
 
 		static void HealRegen()
@@ -76,6 +92,8 @@ namespace Health_System
 		{
 			damageTaken = random.Next(0, 30);
 
+			shield = shield - damageTaken;
+
 			if (shield >= 0)
 			{
 				health = health - damageTaken;
@@ -86,6 +104,8 @@ namespace Health_System
 		static void DamageDelt()
 		{
 			damageTaken = random.Next(5, 50);
+
+			
 		}
 
 
@@ -107,8 +127,44 @@ namespace Health_System
 
 		}
 
+		static void TestGamePlay()
+		{
+			
+
+
+		}
+
+		static void ChangeWeapon()
+		{
+			Console.WriteLine("Would You Like To Change Weapon?? If So Choose A Number Bwtween 0 and 3");
+			string Weapon = Console.ReadLine();
+
+			if (Weapon == "0")
+			{
+				currentWeapon = "Fists";
+			}
+			if (Weapon == "1")
+			{
+				currentWeapon = "Pistol";
+			}
+			if (Weapon == "2")
+			{
+				currentWeapon = "Pump ShotGun";
+			}
+			if (Weapon == "3")
+			{
+				currentWeapon = "Ballistic Assault Rifle";
+			}
+		}
+
+		static void Monster()
+		{
+			
+		}
+
 		static void Main(string[] args)
 		{
+
 		}
 	}
 }
