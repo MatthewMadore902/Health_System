@@ -35,7 +35,19 @@ namespace Health_System
 
 		static void HealRegen()
 		{
-			
+			if (health >= 20)
+			{
+				Console.WriteLine("WOuld You Like Some Health? Y/N");
+				string userHealth = Console.ReadLine();
+				if (userHealth == "Y")
+				{
+					health = health + 25;
+				}
+				if (userHealth == "N")
+				{
+					health = health + 0;
+				}
+			}
 		}
 
 		static void Shield()
@@ -45,7 +57,19 @@ namespace Health_System
 
 		static void ShieldRegen()
 		{
-			
+			if (shield >= 5)
+			{
+				Console.WriteLine("WOuld You Like A Shield Pot? Y/N");
+				string user = Console.ReadLine();
+				if (user == "Y")
+				{
+					shield = shield + 15;
+				}
+				if (user == "N")
+				{
+					shield = shield + 0;
+				}
+			}
 		}
 
 		static void TakeDamage()
