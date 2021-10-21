@@ -8,72 +8,64 @@ namespace Health_System
 {
 	class Program
 	{
-		static int health;
+		static int health = 100;
 		static int damageTaken;
 		static int dealtDamage;
-		static int healthRegen;
-		static int shield;
-		static int shieldRegen;
+		//static int monsterDamage;
+
+		static int weapon;
+		static int shield = 50;
+
 		static int lives = 3;
 		static System.Random random = new System.Random();
-		static string[] weapon;
-		static int[] ammo;
-		static string currentWeapon;
-		
+		static string[] weaponName = new string[4];
+		static int[] ammo = new int[4];
+
+		static int monsterHealth;
+		static bool isAlive = true;
 
 
 		static void ShowHUD()
 		{
 			Console.WriteLine("#################################################");
-			Console.WriteLine("health: " + health, "Lives: " + lives, "Shield: " + shield);
+			Console.WriteLine("health: " + health + " " + "Lives: " + lives + " " + "Shield: " + shield);
 			Console.WriteLine("");
-			Console.WriteLine("Ammo:" + ammo, "Current weapon: " + currentWeapon);
+			Console.WriteLine("Ammo:" + ammo[weapon] + "       " + "Current weapon: " + weaponName[weapon]);
 			Console.WriteLine("#################################################");
+			Console.ReadKey();
 		}
 
 		static void Health()
 		{
-			health = 100;
+
 
 			if (health <= 0)
 			{
 				lives = lives - 1;
+				health = 100;
 			}
+
 			if (lives == 0)
 			{
+				Console.WriteLine("Out of Lives");
 				Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++");
 				Console.WriteLine("+                                             +");
 				Console.WriteLine("+             Game Over You Suck              +");
 				Console.WriteLine("+                                             +");
 				Console.WriteLine("+++++++++++++++++++++++++++++++++++++++++++++++");
+				Console.ReadKey();
+				health = 0;
+				isAlive = false;
 			}
 		}
 
-		static void HealRegen()
-		{
-			if (health >= 20)
-			{
-				Console.WriteLine("WOuld You Like Some Health? Y/N");
-				string userHealth = Console.ReadLine();
-				if (userHealth == "Y")
-				{
-					health = health + 25;
-				}
-				if (userHealth == "N")
-				{
-					health = health + 0;
-				}
-			}
-		}
+
 
 		static void Shield()
 		{
 			shield = 50;
-		}
 
-		static void ShieldRegen()
-		{
-			if (shield >= 5)
+			if (shield <= 5)
 			{
 				Console.WriteLine("WOuld You Like A Shield Pot? Y/N");
 				string user = Console.ReadLine();
@@ -88,37 +80,38 @@ namespace Health_System
 			}
 		}
 
+
 		static void TakeDamage()
 		{
 			damageTaken = random.Next(0, 30);
 
 			shield = shield - damageTaken;
+			Console.WriteLine("damage taken " + damageTaken);
 
-			if (shield >= 0)
+			if (shield <= 0)
 			{
 				health = health - damageTaken;
+				shield = 0;
 			}
+			Console.ReadKey();
 		}
 
 
 		static void DamageDelt()
 		{
-			damageTaken = random.Next(5, 50);
-
+			dealtDamage = random.Next(5, 50);
+			Console.WriteLine("dealt Damage " + dealtDamage);
 			
 		}
 
 
-		static void Weapon()
+		static void Array()
 		{
-			weapon = new string[3];
+			weaponName[0] = "Fists";
+			weaponName[1] = "pistol";
+			weaponName[2] = "Pump ShotGun";
+			weaponName[3] = "Ballistic Assault Rifle";
 
-			weapon[0] = "Fists";
-			weapon[1] = "pistol";
-			weapon[2] = "Pump ShotGun";
-			weapon[3] = "Ballistic Assault Rifle";
-
-			ammo = new int[3];
 			ammo[0] = 999999999;
 			ammo[1] = 8;
 			ammo[2] = 6;
@@ -129,41 +122,54 @@ namespace Health_System
 
 		static void TestGamePlay()
 		{
-			
 
+			Console.WriteLine("A monster jumps oy of the bushs at you");
 
 		}
 
-		static void ChangeWeapon()
-		{
-			Console.WriteLine("Would You Like To Change Weapon?? If So Choose A Number Bwtween 0 and 3");
-			string Weapon = Console.ReadLine();
 
-			if (Weapon == "0")
-			{
-				currentWeapon = "Fists";
-			}
-			if (Weapon == "1")
-			{
-				currentWeapon = "Pistol";
-			}
-			if (Weapon == "2")
-			{
-				currentWeapon = "Pump ShotGun";
-			}
-			if (Weapon == "3")
-			{
-				currentWeapon = "Ballistic Assault Rifle";
-			}
+		static void CurrentWeapon()
+		{
+			Console.WriteLine("Would You Like To Change Weapon?? If So Choose A Number Between 0 and 3");
+			weapon = 2;
+			Console.WriteLine("User Picked 2");
+
 		}
 
 		static void Monster()
 		{
-			
+			monsterHealth = 50;
+
+			//monsterDamage = random.Next(1, 30);
+
+
+			if (monsterHealth <= 0)
+			{
+				monsterHealth = 0;
+				Console.WriteLine("Monster Died");
+			}
+
+			Console.ReadLine();
+
 		}
 
 		static void Main(string[] args)
 		{
+			while (isAlive == true)
+			{
+				Array();
+				ShowHUD();
+				CurrentWeapon();
+				ShowHUD();
+				TestGamePlay();
+				Monster();
+				DamageDelt();
+				TakeDamage();
+				Health();
+				Array();
+				ShowHUD();
+			}
+
 
 		}
 	}
