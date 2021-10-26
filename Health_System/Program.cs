@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Health_System
 {
@@ -38,7 +39,10 @@ namespace Health_System
 		static void Health()
 		{
 
-
+			if (health >= 100)
+			{
+				health = 100;
+			}
 			if (health <= 0)
 			{
 				lives = lives - 1;
@@ -58,6 +62,16 @@ namespace Health_System
 				isAlive = false;
 			}
 		}
+		static void Heal()
+		{
+			if (health <= 25)
+			{
+				Console.WriteLine();
+				Console.WriteLine("the player healed 25 health points");
+				Console.WriteLine();
+				health = health + 25;
+			}
+		}
 
 
 
@@ -65,21 +79,18 @@ namespace Health_System
 		{
 			shield = 50;
 
-			if (shield <= 5)
-			{
-				Console.WriteLine("WOuld You Like A Shield Pot? Y/N");
-				string user = Console.ReadLine();
-				if (user == "Y")
-				{
-					shield = shield + 15;
-				}
-				if (user == "N")
-				{
-					shield = shield + 0;
-				}
-			}
 		}
 
+		static void ShieldRegen()
+		{
+			if (shield <= 5)
+			{
+				Console.WriteLine();
+				Console.WriteLine("The player regenerated 10 shield points");
+				Console.WriteLine();
+				shield = shield + 10;
+			}
+		}
 
 		static void TakeDamage()
 		{
@@ -153,10 +164,34 @@ namespace Health_System
 
 		}
 
+
+		static void UnitTest()
+		{
+			Console.WriteLine("Player is trying to heal");
+			Console.WriteLine("Testing that health cannot go over 100");
+			Console.WriteLine("Health cannot go over 100");
+			Console.WriteLine();
+			health = 100;
+			Heal();
+			Debug.Assert(health == 100);
+
+			Console.WriteLine("Player is trying to regen shield");
+			Console.WriteLine("Testing that shield cannot go over 50");
+			Console.WriteLine("Shield cannot go over 50");
+			Console.WriteLine();
+			ShieldRegen();
+			shield = 50;
+			Debug.Assert(shield == 50);
+			
+
+
+		}
+
 		static void Main(string[] args)
 		{
 			while (isAlive == true)
 			{
+				UnitTest();
 				Array();
 				ShowHUD();
 				CurrentWeapon();
@@ -165,6 +200,9 @@ namespace Health_System
 				Monster();
 				DamageDelt();
 				TakeDamage();
+				ShowHUD();
+				Heal();
+				ShieldRegen();
 				Health();
 				Array();
 				ShowHUD();
