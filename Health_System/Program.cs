@@ -90,6 +90,10 @@ namespace Health_System
 				Console.WriteLine();
 				shield = shield + 10;
 			}
+			if (shield >= 50)
+			{
+				shield = 50;
+			}
 		}
 
 		static void TakeDamage()
@@ -171,7 +175,6 @@ namespace Health_System
 			Console.WriteLine("Testing that health cannot go over 100");
 			Console.WriteLine("Health cannot go over 100");
 			Console.WriteLine();
-			health = 100;
 			Heal();
 			Debug.Assert(health == 100);
 
@@ -180,7 +183,6 @@ namespace Health_System
 			Console.WriteLine("Shield cannot go over 50");
 			Console.WriteLine();
 			ShieldRegen();
-			shield = 50;
 			Debug.Assert(shield == 50);
 			
 
@@ -189,9 +191,10 @@ namespace Health_System
 
 		static void Main(string[] args)
 		{
+			UnitTest();
 			while (isAlive == true)
 			{
-				UnitTest();
+				
 				Array();
 				ShowHUD();
 				CurrentWeapon();
